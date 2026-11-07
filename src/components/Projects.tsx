@@ -36,15 +36,15 @@ const projects: Project[] = [
     href: "https://morniy.online",
   },
   {
-    slug: "hone",
-    title: "Hone",
+    slug: "foige",
+    title: "Foige",
     tag: "Fitness SaaS",
     description:
       "A client manager for personal trainers — track who has sessions left, log client history, and get paid, without chasing anyone on WhatsApp.",
     tags: ["SaaS", "Client Management"],
     wide: "/honelaptop.png",
     close: "/honephone.png",
-    href: "https://forge-vkjd.vercel.app",
+    href: "https://foige.online",
   },
   {
     slug: "liquidlift",
