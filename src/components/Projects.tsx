@@ -27,6 +27,10 @@ type Project = {
   wideAspect?: string;
   closeAspect?: string;
   closeCaption?: string;
+  /** show the close-up inside a desktop app window */
+  desktop?: boolean;
+  /** call-to-action label, e.g. "Get the desktop app" (default "Visit {title}") */
+  cta?: string;
   /** "how it's built" breakdown, shown under the description */
   architecture?: { layer: string; stack: string; job: string }[];
   docHref?: string;
@@ -39,20 +43,22 @@ const projects: Project[] = [
     tag: "Creator Tools · Desktop App",
     description:
       "A desktop app for clippers. Drop in a long stream, podcast or livestream and it transcribes it, finds the best moments, then cuts and reframes them into ready-to-post clips for TikTok, YouTube, Instagram and X — ready to submit to Whop Content Rewards and get paid.",
-    tags: ["Desktop App", "AI Video", "React · Tauri", "Python", "FastAPI"],
+    tags: ["Desktop App", "AI Video", "Rust", "Tauri", "React", "Python", "FastAPI"],
     wide: "/liquid2.jpeg",
     close: "/liquid3.jpeg",
     video: "/liquid1.mp4",
     wideAspect: "sm:aspect-[16/10]",
     closeAspect: "aspect-[784/480]",
-    closeCaption: "Live demo · the app in action",
+    closeCaption: "Live demo · the desktop app in action",
+    desktop: true,
+    cta: "Get the desktop app",
     href: "https://liquidclips.app",
     docHref: "/LiquidClips%20Technical%20Architecture%20Overview.pdf",
     architecture: [
       {
         layer: "Interface",
-        stack: "React · TypeScript · Tauri",
-        job: "Everything you see and click, in a native desktop window.",
+        stack: "Rust · Tauri · React · TypeScript",
+        job: "A native desktop app: a Rust core with a React interface for everything you see and click.",
       },
       {
         layer: "Media engine",
@@ -292,7 +298,7 @@ function Scene({
           {domain(p.href)}
         </span>
         <span className="absolute bottom-4 right-5 flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition-all duration-300 sm:bottom-6 sm:right-8 sm:translate-y-2 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
-          Visit site <ArrowUpRight size={14} />
+          {p.desktop ? "Get the app" : "Visit site"} <ArrowUpRight size={14} />
         </span>
       </motion.a>
 
@@ -324,7 +330,7 @@ function Scene({
             rel="noreferrer"
             className="group mt-8 inline-flex items-center gap-2 border-b border-neon/50 pb-1 text-sm font-semibold text-foreground transition-colors hover:border-neon hover:text-neon-3"
           >
-            Visit {p.title}
+            {p.cta ?? `Visit ${p.title}`}
             <ArrowUpRight
               size={16}
               className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
@@ -338,11 +344,19 @@ function Scene({
             flip ? "md:order-1 md:col-start-1" : "md:col-start-7"
           } md:-mt-24`}
         >
-          <div
-            className={`relative ${
-              p.closeAspect ?? "aspect-[2.13/1]"
-            } overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9)]`}
-          >
+          <div className="overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9)]">
+          {p.desktop && (
+            <div className="flex items-center gap-1.5 border-b border-white/10 bg-[#1b1b1f] px-3.5 py-2.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+              <span className="flex-1 text-center font-mono text-[10px] tracking-wider text-white/50">
+                {p.title} — Desktop
+              </span>
+              <span className="w-[38px]" />
+            </div>
+          )}
+          <div className={`relative ${p.closeAspect ?? "aspect-[2.13/1]"} overflow-hidden`}>
             {p.video ? (
               <DemoVideo src={p.video} poster={p.close} title={p.title} />
             ) : (
@@ -355,7 +369,7 @@ function Scene({
                 className="object-cover"
               />
             )}
-            <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
+          </div>
           </div>
           <p className="mt-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
             {p.video && <span className="flicker h-1.5 w-1.5 rounded-full bg-red-500" />}

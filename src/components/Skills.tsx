@@ -5,13 +5,15 @@ import SectionHeading from "./SectionHeading";
 
 const stack = [
   "React", "Next.js", "TypeScript", "Tailwind CSS", "Vite",
+  "Rust", "Tauri", "Python", "FastAPI",
   "Node.js", "Express", "PostgreSQL", "Prisma", "tRPC",
   "Docker", "CI/CD", "Vitest", "Playwright", "Git",
 ];
 
 const groups = [
   { title: "Frontend", note: "What people see and click", skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vite"] },
-  { title: "Backend", note: "Data, logic and APIs", skills: ["Node.js", "Express", "PostgreSQL", "Prisma", "REST / tRPC"] },
+  { title: "Backend", note: "Data, logic and APIs", skills: ["Node.js", "Express", "Python", "FastAPI", "PostgreSQL", "Prisma", "REST / tRPC"] },
+  { title: "Desktop", note: "Native desktop apps", skills: ["Rust", "Tauri", "React"] },
   { title: "Tooling", note: "Shipping and testing", skills: ["Git", "Docker", "CI/CD", "Vitest", "Playwright"] },
 ];
 
@@ -35,7 +37,7 @@ export default function Skills() {
       </div>
 
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {groups.map((g, i) => (
             <motion.div
               key={g.title}
