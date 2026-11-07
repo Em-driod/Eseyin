@@ -187,8 +187,8 @@ export default function HeroScrollCards() {
             transition={{ delay: 0.75 }}
             className="mt-8 max-w-md text-base leading-relaxed text-white/60 sm:text-lg"
           >
-            Software developer. I build software with a business model
-            attached — six live products shipped, each one designed to
+            Software developer. I build web and desktop apps with a
+            business model attached — six live products shipped, each one designed to
             stand on its own as a real business, not a demo.
           </motion.p>
 

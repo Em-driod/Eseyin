@@ -13,7 +13,7 @@ const stack = [
 const groups = [
   { title: "Frontend", note: "What people see and click", skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vite"] },
   { title: "Backend", note: "Data, logic and APIs", skills: ["Node.js", "Express", "Python", "FastAPI", "PostgreSQL", "Prisma", "REST / tRPC"] },
-  { title: "Desktop", note: "Native desktop apps", skills: ["Rust", "Tauri", "React"] },
+  { title: "Desktop", note: "Native desktop apps · shipped on macOS", skills: ["Rust", "Tauri", "React"] },
   { title: "Tooling", note: "Shipping and testing", skills: ["Git", "Docker", "CI/CD", "Vitest", "Playwright"] },
 ];
 

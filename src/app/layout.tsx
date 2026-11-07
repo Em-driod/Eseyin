@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Eseyin Emmanuel — Software Developer",
-  description: "I build software with a business model attached. Portfolio of Eseyin Emmanuel, software developer.",
+  description: "I build web and desktop apps with a business model attached. Portfolio of Eseyin Emmanuel, software developer.",
 };
 
 export default function RootLayout({

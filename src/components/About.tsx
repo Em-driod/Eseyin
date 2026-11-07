@@ -12,8 +12,9 @@ const stats = [
 ];
 
 const paragraphs = [
-  "I'm Eseyin Emmanuel, a software developer. I don't just write code — I build software with a business model attached.",
+  "I'm Eseyin Emmanuel, a software developer. I don't just write code — I build web and desktop apps with a business model attached.",
   "That's meant shipping real, live products across different niches: an AI video-clipping desktop app, a business operating system, a fitness-industry SaaS, an e-commerce conversion tool, a music distribution platform, and a food ordering storefront.",
+  "On the desktop side, LiquidClips is a native macOS app with a Rust core, a React interface and a Python media engine — so if your product needs to live on the desktop, not just in the browser, I can build that too.",
   "Each one is built to stand on its own as a product people actually pay for — not just a demo.",
 ];
 

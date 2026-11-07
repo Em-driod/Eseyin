@@ -23,7 +23,7 @@ export default function Contact() {
               </span>
             </>
           }
-          intro="Open to full-time roles, freelance work, and interesting collaborations. Reach out and I'll get back to you soon."
+          intro="Need a web app, a SaaS or a native desktop app? I'm open to full-time roles, freelance work, and interesting collaborations. Reach out and I'll get back to you soon."
         />
 
         <motion.div

@@ -40,18 +40,18 @@ const projects: Project[] = [
   {
     slug: "liquidclips",
     title: "LiquidClips",
-    tag: "Creator Tools · Desktop App",
+    tag: "Creator Tools · macOS App",
     description:
-      "A desktop app for clippers. Drop in a long stream, podcast or livestream and it transcribes it, finds the best moments, then cuts and reframes them into ready-to-post clips for TikTok, YouTube, Instagram and X — ready to submit to Whop Content Rewards and get paid.",
-    tags: ["Desktop App", "AI Video", "Rust", "Tauri", "React", "Python", "FastAPI"],
+      "A native macOS desktop app for clippers. Drop in a long stream, podcast or livestream and it transcribes it, finds the best moments, then cuts and reframes them into ready-to-post clips for TikTok, YouTube, Instagram and X — ready to submit to Whop Content Rewards and get paid.",
+    tags: ["macOS Desktop App", "AI Video", "Rust", "Tauri", "React", "Python", "FastAPI"],
     wide: "/liquid2.jpeg",
     close: "/liquid3.jpeg",
     video: "/liquid1.mp4",
     wideAspect: "sm:aspect-[16/10]",
     closeAspect: "aspect-[784/480]",
-    closeCaption: "Live demo · the desktop app in action",
+    closeCaption: "Live demo · running on macOS",
     desktop: true,
-    cta: "Get the desktop app",
+    cta: "Get it for Mac",
     href: "https://liquidclips.app",
     docHref: "/LiquidClips%20Technical%20Architecture%20Overview.pdf",
     architecture: [
@@ -298,7 +298,7 @@ function Scene({
           {domain(p.href)}
         </span>
         <span className="absolute bottom-4 right-5 flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-black transition-all duration-300 sm:bottom-6 sm:right-8 sm:translate-y-2 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
-          {p.desktop ? "Get the app" : "Visit site"} <ArrowUpRight size={14} />
+          {p.desktop ? "Get it for Mac" : "Visit site"} <ArrowUpRight size={14} />
         </span>
       </motion.a>
 
@@ -351,7 +351,7 @@ function Scene({
               <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
               <span className="flex-1 text-center font-mono text-[10px] tracking-wider text-white/50">
-                {p.title} — Desktop
+                {p.title} — macOS
               </span>
               <span className="w-[38px]" />
             </div>
