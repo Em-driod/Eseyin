@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fdf8f3;
-  --surface: #ffffff;
-  --surface-2: #f5ebe0;
-  --foreground: #2e1a0f;
-  --muted: #7a6355;
-  --border: #e8dccb;
+  --background: #0d0906;
+  --surface: #15100c;
+  --surface-2: #1e1610;
+  --foreground: #f6eee6;
+  --muted: #a39184;
+  --border: #2b211a;
   --neon: #ea580c;
   --neon-2: #9a3412;
-  --neon-3: #c2703d;
+  --neon-3: #f29a5e;
   --warn: #d97706;
 }
 
@@ -40,6 +40,23 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   position: relative;
+}
+
+/* global film grain — ties every section into one "shot" */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee, .flicker, .caret { animation: none; }
 }
 
 ::selection {

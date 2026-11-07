@@ -3,41 +3,50 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./icons";
+import SectionHeading from "./SectionHeading";
 
 export default function Contact() {
   return (
-    <section id="contact" className="border-t border-border">
-      <div className="relative mx-auto max-w-6xl px-6 py-24 text-center">
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon/10 blur-[100px]" />
+    <section id="contact" className="relative overflow-hidden border-t border-border">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon/10 blur-[120px]" />
+
+      <div className="relative mx-auto max-w-7xl px-6 py-28 sm:py-40">
+        <SectionHeading
+          align="center"
+          chapter="04"
+          label="Contact"
+          title={
+            <>
+              Let&apos;s build something{" "}
+              <span className="bg-gradient-to-r from-neon to-neon-3 bg-clip-text text-transparent">
+                together
+              </span>
+            </>
+          }
+          intro="Open to full-time roles, freelance work, and interesting collaborations. Reach out and I'll get back to you soon."
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, delay: 0.35 }}
+          className="mt-10 flex flex-col items-center gap-8"
         >
-          <p className="font-mono text-sm text-neon">// get_in_touch</p>
-          <h2 className="glow-text mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Let&apos;s build something together
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-muted">
-            Open to full-time roles, freelance work, and interesting
-            collaborations. Reach out and I&apos;ll get back to you soon.
-          </p>
           <a
             href="mailto:sheenleen2@gmail.com"
-            className="group glow-border mt-8 inline-flex items-center gap-2 rounded bg-neon px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-105"
+            className="group glow-border inline-flex items-center gap-2 rounded-full bg-neon px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:scale-105"
           >
             <Mail size={16} />
             sheenleen2@gmail.com
             <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
-          <div className="mt-8 flex items-center justify-center gap-4">
+          <div className="flex items-center gap-4">
             <a
               href="https://github.com/Em-driod"
               target="_blank"
               rel="noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded border border-border text-foreground transition-colors hover:border-neon hover:text-neon"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-foreground transition-colors hover:border-neon hover:text-neon"
               aria-label="GitHub"
             >
               <GithubIcon size={18} />
@@ -46,7 +55,7 @@ export default function Contact() {
               href="https://www.linkedin.com/in/emmanuel-eseyin-525a14397/"
               target="_blank"
               rel="noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded border border-border text-foreground transition-colors hover:border-neon hover:text-neon"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-foreground transition-colors hover:border-neon hover:text-neon"
               aria-label="LinkedIn"
             >
               <LinkedinIcon size={18} />
@@ -54,8 +63,10 @@ export default function Contact() {
           </div>
         </motion.div>
       </div>
-      <footer className="border-t border-border px-6 py-6 text-center font-mono text-xs text-muted">
-        © {new Date().getFullYear()} eseyin_emmanuel — built with Next.js &amp; Tailwind CSS
+
+      <footer className="relative flex flex-col items-center justify-between gap-2 border-t border-border px-6 py-6 font-mono text-[11px] uppercase tracking-[0.2em] text-muted sm:flex-row sm:px-10">
+        <span>© {new Date().getFullYear()} Eseyin Emmanuel</span>
+        <span>The end · thanks for watching</span>
       </footer>
     </section>
   );

@@ -61,7 +61,7 @@ export default function HeroScrollCards() {
     <div
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      className="relative min-h-screen overflow-hidden bg-[#0d0906]"
+      className="relative min-h-screen overflow-hidden bg-background"
     >
       {/* letterbox bars */}
       <motion.div
@@ -97,8 +97,8 @@ export default function HeroScrollCards() {
 
       {/* viewfinder corner brackets */}
       {[
-        "left-6 top-16 border-l-2 border-t-2",
-        "right-6 top-16 border-r-2 border-t-2",
+        "left-6 top-24 border-l-2 border-t-2",
+        "right-6 top-24 border-r-2 border-t-2",
         "left-6 bottom-16 border-l-2 border-b-2",
         "right-6 bottom-16 border-r-2 border-b-2",
       ].map((pos, i) => (
@@ -110,15 +110,6 @@ export default function HeroScrollCards() {
           className={`pointer-events-none absolute z-30 h-6 w-6 border-neon/60 ${pos}`}
         />
       ))}
-
-      {/* film grain */}
-      <div
-        className="pointer-events-none absolute inset-0 z-20 opacity-[0.05] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
-      />
 
       {/* one-time light sweep */}
       <motion.div
@@ -133,7 +124,7 @@ export default function HeroScrollCards() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8, duration: 0.6 }}
-        className="pointer-events-none absolute right-6 top-6 z-30 flex items-center gap-2 font-mono text-[11px] text-white/70"
+        className="pointer-events-none absolute right-6 top-[4.5rem] z-30 hidden sm:flex items-center gap-2 font-mono text-[11px] text-white/70"
       >
         <span className="flicker h-1.5 w-1.5 rounded-full bg-red-500" />
         REC {timecode}
@@ -142,7 +133,7 @@ export default function HeroScrollCards() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.9, duration: 0.6 }}
-        className="pointer-events-none absolute left-6 top-6 z-30 font-mono text-[11px] text-white/50"
+        className="pointer-events-none absolute left-6 top-[4.5rem] z-30 font-mono text-[11px] text-white/50"
       >
         50mm &middot; f/1.8
       </motion.div>
@@ -282,36 +273,76 @@ function Pendant() {
         {/* chain */}
         <div className="flex flex-col items-center">
           {Array.from({ length: 9 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-4 w-2.5 rounded-full border border-neon/60 bg-gradient-to-b from-white/40 via-neon/30 to-transparent shadow-[0_1px_2px_rgba(0,0,0,0.4)] sm:h-5 sm:w-3"
-              style={{
-                marginTop: i === 0 ? 0 : -6,
-                transform: `rotate(${i % 2 === 0 ? 0 : 90}deg)`,
-              }}
-            />
+            <ChainLink key={i} index={i} horizontal={i % 2 === 1} />
           ))}
         </div>
 
         {/* pendant */}
-        <motion.div
-          animate={{ rotateY: spins * 360 }}
-          transition={{ duration: 1.8, ease: [0.65, 0, 0.35, 1] }}
-          style={{ perspective: 800, backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
-          className="glow-border relative -mt-1 h-44 w-44 overflow-hidden rounded-full border-2 border-neon/50 shadow-[0_20px_60px_-12px_rgba(234,88,12,0.6)] sm:h-56 sm:w-56 md:h-64 md:w-64"
-        >
-          <Image
-            src="/image.png"
-            alt="Eseyin Emmanuel"
-            fill
-            priority
-            quality={100}
-            className="object-cover"
-            sizes="256px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-neon-2/20 via-transparent to-black/30 mix-blend-multiply" />
-        </motion.div>
+        <div className="relative -mt-1" style={{ perspective: 900 }}>
+          <motion.div
+            animate={{
+              rotateY: spins * 360,
+              scale: spins > 0 ? [1, 1.06, 0.98, 1] : 1,
+            }}
+            transition={{
+              rotateY: { duration: 1.8, ease: [0.22, 1, 0.36, 1] },
+              scale: { duration: 1.8, times: [0, 0.5, 0.8, 1], ease: "easeInOut" },
+            }}
+            className="glow-border relative h-44 w-44 overflow-hidden rounded-full border-2 border-neon/50 shadow-[0_20px_60px_-12px_rgba(234,88,12,0.6)] sm:h-56 sm:w-56 md:h-64 md:w-64"
+          >
+            <Image
+              src="/image.png"
+              alt="Eseyin Emmanuel"
+              fill
+              priority
+              quality={100}
+              className="object-cover"
+              sizes="256px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-neon-2/20 via-transparent to-black/30 mix-blend-multiply" />
+
+            {/* specular sweep, replays on every spin */}
+            {spins > 0 && (
+              <motion.div
+                key={spins}
+                initial={{ x: "-130%", opacity: 0 }}
+                animate={{ x: "130%", opacity: [0, 0.9, 0] }}
+                transition={{ duration: 1.8, ease: "easeInOut" }}
+                className="pointer-events-none absolute inset-y-0 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent mix-blend-overlay"
+              />
+            )}
+          </motion.div>
+        </div>
       </motion.div>
     </motion.div>
+  );
+}
+
+function ChainLink({ index, horizontal }: { index: number; horizontal: boolean }) {
+  return (
+    <div
+      className={
+        horizontal
+          ? "relative h-3 w-[22px] shrink-0 sm:h-3.5 sm:w-7"
+          : "relative h-[22px] w-3 shrink-0 sm:h-7 sm:w-3.5"
+      }
+      style={{
+        marginTop: index === 0 ? 0 : -7,
+        zIndex: 20 - index,
+      }}
+    >
+      {/* metal ring */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          background:
+            "linear-gradient(135deg, #fff8e6 0%, #fdba74 22%, #f97316 45%, #9a3412 72%, #431407 100%)",
+          boxShadow:
+            "0 2px 3px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.6)",
+        }}
+      />
+      {/* punched-through hole */}
+      <div className="absolute inset-[3px] rounded-full bg-background sm:inset-[4px]" />
+    </div>
   );
 }
