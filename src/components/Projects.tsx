@@ -21,9 +21,51 @@ type Project = {
   wide: string;
   close: string;
   href: string;
+  /** optional muted, looping screen recording shown as the close-up shot */
+  video?: string;
+  /** aspect ratio of the wide shot on sm+ screens (default cinematic 2.13:1) */
+  wideAspect?: string;
+  closeAspect?: string;
+  closeCaption?: string;
+  /** "how it's built" breakdown, shown under the description */
+  architecture?: { layer: string; stack: string; job: string }[];
+  docHref?: string;
 };
 
 const projects: Project[] = [
+  {
+    slug: "liquidclips",
+    title: "LiquidClips",
+    tag: "Creator Tools · Desktop App",
+    description:
+      "A desktop app for clippers. Drop in a long stream, podcast or livestream and it transcribes it, finds the best moments, then cuts and reframes them into ready-to-post clips for TikTok, YouTube, Instagram and X — ready to submit to Whop Content Rewards and get paid.",
+    tags: ["Desktop App", "AI Video", "React · Tauri", "Python", "FastAPI"],
+    wide: "/liquid2.jpeg",
+    close: "/liquid3.jpeg",
+    video: "/liquid1.mp4",
+    wideAspect: "sm:aspect-[16/10]",
+    closeAspect: "aspect-[784/480]",
+    closeCaption: "Live demo · the app in action",
+    href: "https://liquidclips.app",
+    docHref: "/LiquidClips%20Technical%20Architecture%20Overview.pdf",
+    architecture: [
+      {
+        layer: "Interface",
+        stack: "React · TypeScript · Tauri",
+        job: "Everything you see and click, in a native desktop window.",
+      },
+      {
+        layer: "Media engine",
+        stack: "Python sidecar · ffmpeg",
+        job: "Transcribes, cuts and reframes video on your own machine.",
+      },
+      {
+        layer: "Backend",
+        stack: "FastAPI",
+        job: "Accounts, billing and permissions — the source of truth.",
+      },
+    ],
+  },
   {
     slug: "morniy",
     title: "Morniy",
@@ -99,7 +141,7 @@ export default function Projects() {
           label="Selected work"
           title={
             <>
-              Five products.{" "}
+              Six products.{" "}
               <span className="bg-gradient-to-r from-neon to-neon-3 bg-clip-text text-transparent">
                 All live.
               </span>
@@ -214,12 +256,14 @@ function Scene({
         rel="noreferrer"
         aria-label={`Visit ${p.title} (opens in a new tab)`}
         style={{ clipPath }}
-        className="group relative block aspect-[16/10] w-full overflow-hidden bg-surface-2 sm:aspect-[2.13/1]"
+        className={`group relative block aspect-[16/10] w-full overflow-hidden bg-surface-2 ${
+          p.wideAspect ?? "sm:aspect-[2.13/1]"
+        }`}
       >
         <motion.div style={{ scale: imgScale, y: imgY }} className="absolute inset-0">
           <Image
             src={p.wide}
-            alt={`${p.title} shown on a laptop`}
+            alt={`${p.title} shown on screen`}
             fill
             quality={90}
             sizes="(max-width: 1280px) 100vw, 1232px"
@@ -290,26 +334,39 @@ function Scene({
 
         <motion.div
           style={{ y: closeY }}
-          className={`relative hidden md:block md:col-span-6 ${
+          className={`relative md:col-span-6 ${p.video ? "" : "hidden md:block"} ${
             flip ? "md:order-1 md:col-start-1" : "md:col-start-7"
           } md:-mt-24`}
         >
-          <div className="relative aspect-[2.13/1] overflow-hidden rounded-2xl border border-white/10 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9)]">
-            <Image
-              src={p.close}
-              alt={`${p.title} close-up on a phone`}
-              fill
-              quality={85}
-              sizes="600px"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 ring-1 ring-inset ring-white/10" />
+          <div
+            className={`relative ${
+              p.closeAspect ?? "aspect-[2.13/1]"
+            } overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9)]`}
+          >
+            {p.video ? (
+              <DemoVideo src={p.video} poster={p.close} title={p.title} />
+            ) : (
+              <Image
+                src={p.close}
+                alt={`${p.title} close-up on a phone`}
+                fill
+                quality={85}
+                sizes="600px"
+                className="object-cover"
+              />
+            )}
+            <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
           </div>
-          <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
-            Close-up · on mobile
+          <p className="mt-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
+            {p.video && <span className="flicker h-1.5 w-1.5 rounded-full bg-red-500" />}
+            {p.closeCaption ?? "Close-up · on mobile"}
           </p>
         </motion.div>
       </div>
+
+      {p.architecture && (
+        <Architecture items={p.architecture} docHref={p.docHref} />
+      )}
     </article>
   );
 }
@@ -355,5 +412,86 @@ function ProgressRail({ visible, active }: { visible: boolean; active: number })
         })}
       </ol>
     </motion.nav>
+  );
+}
+
+/* Muted, looping screen recording. Pauses when off-screen to save   */
+/* battery, and never autoplays for people who prefer reduced motion. */
+function DemoVideo({ src, poster, title }: { src: string; poster: string; title: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const reduce = useReducedMotion();
+  const inView = useInView(ref, { margin: "0px 0px -10% 0px" });
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v || reduce) return;
+    if (inView) v.play().catch(() => {});
+    else v.pause();
+  }, [inView, reduce]);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      controls={!!reduce}
+      aria-label={`${title} screen recording`}
+      className="absolute inset-0 h-full w-full object-cover"
+    />
+  );
+}
+
+/* Plain-English "how it's built" strip for technical projects. */
+function Architecture({
+  items,
+  docHref,
+}: {
+  items: { layer: string; stack: string; job: string }[];
+  docHref?: string;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.8, ease }}
+      className="mt-16 md:mt-20"
+    >
+      <div className="mb-5 flex flex-wrap items-baseline justify-between gap-3">
+        <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-neon-3">
+          How it&apos;s built · three layers, one job each
+        </p>
+        {docHref && (
+          <a
+            href={docHref}
+            target="_blank"
+            rel="noreferrer"
+            className="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-foreground"
+          >
+            Read the technical overview (PDF)
+            <ArrowUpRight
+              size={14}
+              className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            />
+          </a>
+        )}
+      </div>
+      <ol className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-3">
+        {items.map((it, i) => (
+          <li key={it.layer} className="relative bg-surface p-6">
+            <div className="flex items-baseline justify-between">
+              <h4 className="text-lg font-bold text-foreground">{it.layer}</h4>
+              <span className="font-mono text-xs text-muted">{pad(i + 1)}</span>
+            </div>
+            <p className="mt-1 font-mono text-xs text-neon-3">{it.stack}</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted">{it.job}</p>
+          </li>
+        ))}
+      </ol>
+    </motion.div>
   );
 }

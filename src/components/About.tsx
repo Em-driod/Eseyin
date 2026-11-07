@@ -6,14 +6,14 @@ import SectionHeading from "./SectionHeading";
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const stats = [
-  { label: "Products shipped", value: "5" },
-  { label: "Live apps", value: "5" },
+  { label: "Products shipped", value: "6" },
+  { label: "Live apps", value: "6" },
   { label: "Industries", value: "4" },
 ];
 
 const paragraphs = [
   "I'm Eseyin Emmanuel, a software developer. I don't just write code — I build software with a business model attached.",
-  "That's meant shipping real, live products across different niches: a business operating system, a fitness-industry SaaS, an e-commerce conversion tool, a music distribution platform, and a food ordering storefront.",
+  "That's meant shipping real, live products across different niches: an AI video-clipping desktop app, a business operating system, a fitness-industry SaaS, an e-commerce conversion tool, a music distribution platform, and a food ordering storefront.",
   "Each one is built to stand on its own as a product people actually pay for — not just a demo.",
 ];
 

@@ -188,7 +188,7 @@ export default function HeroScrollCards() {
             className="mt-8 max-w-md text-base leading-relaxed text-white/60 sm:text-lg"
           >
             Software developer. I build software with a business model
-            attached — five live products shipped, each one designed to
+            attached — six live products shipped, each one designed to
             stand on its own as a real business, not a demo.
           </motion.p>
 
@@ -239,7 +239,7 @@ export default function HeroScrollCards() {
               className="h-px bg-neon/60"
             />
             <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/40">
-              5 products &middot; 1 developer
+              6 products &middot; 1 developer
             </span>
           </motion.div>
         </motion.div>
