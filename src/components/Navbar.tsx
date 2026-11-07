@@ -25,7 +25,7 @@ export default function Navbar() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <nav className="mx-auto flex page-width items-center justify-between px-6 py-4">
         <a
           href="#top"
           className="flex items-center gap-2 font-mono text-sm font-medium tracking-tight text-foreground"

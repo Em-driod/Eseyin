@@ -20,7 +20,7 @@ const groups = [
 export default function Skills() {
   return (
     <section id="skills" className="border-t border-border py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto page-width px-6">
         <SectionHeading chapter="03" label="Stack" title="The toolkit" />
       </div>
 
@@ -36,7 +36,7 @@ export default function Skills() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto page-width px-6">
         <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {groups.map((g, i) => (
             <motion.div

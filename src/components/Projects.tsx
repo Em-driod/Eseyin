@@ -49,7 +49,7 @@ const projects: Project[] = [
     video: "/liquid1.mp4",
     wideAspect: "sm:aspect-[16/10]",
     closeAspect: "aspect-[784/480]",
-    closeCaption: "Live demo · running on macOS",
+    closeCaption: "Live product · running on macOS",
     desktop: true,
     cta: "Get it for Mac",
     href: "https://liquidclips.app",
@@ -141,7 +141,7 @@ export default function Projects() {
     <section id="work" ref={sectionRef} className="relative py-24 sm:py-32">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[60vh] bg-[radial-gradient(ellipse_at_20%_0%,rgba(234,88,12,0.14),transparent_60%)]" />
 
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto page-width px-6">
         <SectionHeading
           chapter="01"
           label="Selected work"
@@ -212,7 +212,7 @@ function Scene({
   const imgScale = useTransform(enter, [0, 1], reduce ? [1, 1] : [1.3, 1.04]);
   const imgY = useTransform(through, [0, 1], reduce ? ["0%", "0%"] : ["-4%", "4%"]);
   const shade = useTransform(enter, [0, 0.9], reduce ? [0, 0] : [0.75, 0]);
-  const closeY = useTransform(through, [0, 1], reduce ? [0, 0] : [140, -140]);
+  const closeY = useTransform(through, [0, 1], reduce ? [0, 0] : [70, -70]);
 
   const flip = i % 2 === 1;
 
@@ -220,7 +220,7 @@ function Scene({
     <article
       id={`project-${p.slug}`}
       ref={sceneRef}
-      className="relative mx-auto max-w-7xl scroll-mt-24 px-6 pb-28 sm:pb-40"
+      className="relative mx-auto page-width scroll-mt-24 px-6 pb-28 sm:pb-40"
     >
       {/* title card */}
       <div className="mb-8 flex items-end justify-between gap-6 sm:mb-10">
@@ -243,7 +243,7 @@ function Scene({
             <motion.h3
               variants={{ hidden: { y: "105%" }, shown: { y: "0%" } }}
               transition={{ duration: 0.9, ease, delay: 0.05 }}
-              className="text-5xl font-black uppercase leading-[0.9] tracking-tighter text-foreground sm:text-7xl md:text-8xl"
+              className="text-5xl font-black uppercase leading-[0.9] tracking-tighter text-foreground sm:text-7xl md:text-8xl min-[1700px]:text-9xl"
             >
               {p.title}
             </motion.h3>
@@ -262,7 +262,7 @@ function Scene({
         rel="noreferrer"
         aria-label={`Visit ${p.title} (opens in a new tab)`}
         style={{ clipPath }}
-        className={`group relative block aspect-[16/10] w-full overflow-hidden bg-surface-2 ${
+        className={`group relative block aspect-[16/10] max-h-[calc(100svh-8rem)] w-full overflow-hidden bg-surface-2 ${
           p.wideAspect ?? "sm:aspect-[2.13/1]"
         }`}
       >
@@ -273,7 +273,9 @@ function Scene({
             fill
             quality={90}
             sizes="(max-width: 1280px) 100vw, 1232px"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] ${
+              p.desktop ? "object-top" : ""
+            }`}
           />
         </motion.div>
 
@@ -311,7 +313,7 @@ function Scene({
           transition={{ duration: 0.8, ease }}
           className={`md:col-span-5 md:pt-14 ${flip ? "md:order-2 md:col-start-8" : ""}`}
         >
-          <p className="text-lg leading-relaxed text-foreground/85 sm:text-xl">
+          <p className="text-lg leading-relaxed text-foreground/85 sm:text-xl min-[1700px]:text-2xl">
             {p.description}
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
@@ -342,7 +344,7 @@ function Scene({
           style={{ y: closeY }}
           className={`relative md:col-span-6 ${p.video ? "" : "hidden md:block"} ${
             flip ? "md:order-1 md:col-start-1" : "md:col-start-7"
-          } md:-mt-24`}
+          } md:-mt-10 lg:-mt-16`}
         >
           <div className="overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9)]">
           {p.desktop && (
@@ -358,7 +360,7 @@ function Scene({
           )}
           <div className={`relative ${p.closeAspect ?? "aspect-[2.13/1]"} overflow-hidden`}>
             {p.video ? (
-              <DemoVideo src={p.video} poster={p.close} title={p.title} />
+              <ProductVideo src={p.video} poster={p.close} title={p.title} />
             ) : (
               <Image
                 src={p.close}
@@ -394,7 +396,7 @@ function ProgressRail({ visible, active }: { visible: boolean; active: number })
       initial={false}
       animate={{ opacity: visible ? 1 : 0, x: visible ? 0 : -12 }}
       transition={{ duration: 0.4, ease }}
-      className={`fixed left-4 top-1/2 z-40 hidden -translate-y-1/2 xl:block ${
+      className={`fixed left-4 top-1/2 z-40 hidden -translate-y-1/2 min-[1440px]:block ${
         visible ? "" : "pointer-events-none"
       }`}
     >
@@ -418,7 +420,7 @@ function ProgressRail({ visible, active }: { visible: boolean; active: number })
                   }`}
                 >
                   {pad(i + 1)}
-                  {on && <span className="ml-2 hidden min-[1600px]:inline">{p.title}</span>}
+                  {on && <span className="ml-2 hidden min-[1800px]:inline">{p.title}</span>}
                 </span>
               </a>
             </li>
@@ -431,7 +433,7 @@ function ProgressRail({ visible, active }: { visible: boolean; active: number })
 
 /* Muted, looping screen recording. Pauses when off-screen to save   */
 /* battery, and never autoplays for people who prefer reduced motion. */
-function DemoVideo({ src, poster, title }: { src: string; poster: string; title: string }) {
+function ProductVideo({ src, poster, title }: { src: string; poster: string; title: string }) {
   const ref = useRef<HTMLVideoElement>(null);
   const reduce = useReducedMotion();
   const inView = useInView(ref, { margin: "0px 0px -10% 0px" });

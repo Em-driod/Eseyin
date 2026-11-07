@@ -31,6 +31,17 @@
   border-color: var(--border);
 }
 
+/* page width: 1280px normally, growing on large monitors */
+.page-width {
+  max-width: 80rem;
+}
+@media (min-width: 1700px) {
+  .page-width { max-width: 94rem; }
+}
+@media (min-width: 2200px) {
+  .page-width { max-width: 112rem; }
+}
+
 html {
   scroll-behavior: smooth;
 }

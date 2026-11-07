@@ -21,7 +21,7 @@ const paragraphs = [
 export default function About() {
   return (
     <section id="about" className="relative border-t border-border">
-      <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32">
+      <div className="mx-auto page-width px-6 py-24 sm:py-32">
         <SectionHeading chapter="02" label="About" title="The developer" />
 
         <div className="mt-14 grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-10">

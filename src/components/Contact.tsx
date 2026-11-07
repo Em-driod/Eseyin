@@ -10,7 +10,7 @@ export default function Contact() {
     <section id="contact" className="relative overflow-hidden border-t border-border">
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-neon/10 blur-[120px]" />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-28 sm:py-40">
+      <div className="relative mx-auto page-width px-6 py-28 sm:py-40">
         <SectionHeading
           align="center"
           chapter="04"
