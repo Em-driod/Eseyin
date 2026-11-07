@@ -220,10 +220,10 @@ function Scene({
     <article
       id={`project-${p.slug}`}
       ref={sceneRef}
-      className="relative mx-auto page-width scroll-mt-24 px-6 pb-28 sm:pb-40"
+      className="relative mx-auto page-width scroll-mt-24 px-6 pb-32 sm:pb-44"
     >
       {/* title card */}
-      <div className="mb-8 flex items-end justify-between gap-6 sm:mb-10">
+      <div className="mb-10 flex items-end justify-between gap-6 sm:mb-14">
         <div>
           <motion.p
             initial={{ opacity: 0, x: -12 }}
@@ -243,7 +243,7 @@ function Scene({
             <motion.h3
               variants={{ hidden: { y: "105%" }, shown: { y: "0%" } }}
               transition={{ duration: 0.9, ease, delay: 0.05 }}
-              className="text-5xl font-black uppercase leading-[0.9] tracking-tighter text-foreground sm:text-7xl md:text-8xl min-[1700px]:text-9xl"
+              className="text-4xl font-black uppercase leading-[0.9] tracking-tighter text-foreground sm:text-5xl md:text-6xl xl:text-7xl"
             >
               {p.title}
             </motion.h3>
@@ -262,9 +262,9 @@ function Scene({
         rel="noreferrer"
         aria-label={`Visit ${p.title} (opens in a new tab)`}
         style={{ clipPath }}
-        className={`group relative block aspect-[16/10] max-h-[calc(100svh-8rem)] w-full overflow-hidden bg-surface-2 ${
+        className={`group relative block aspect-[16/10] max-h-[calc(100svh-8rem)] w-full overflow-hidden rounded-xl border border-white/10 bg-surface-2 shadow-[0_32px_80px_-40px_rgba(0,0,0,0.9)] ${
           p.wideAspect ?? "sm:aspect-[2.13/1]"
-        }`}
+        } mx-auto md:h-[clamp(260px,30vw,380px)] md:max-h-none md:max-w-4xl md:aspect-auto md:rounded-2xl`}
       >
         <motion.div style={{ scale: imgScale, y: imgY }} className="absolute inset-0">
           <Image
@@ -305,7 +305,7 @@ function Scene({
       </motion.a>
 
       {/* details + close-up shot */}
-      <div className="relative mt-10 grid grid-cols-1 gap-10 md:mt-0 md:grid-cols-12 md:gap-8">
+      <div className="relative mt-12 grid grid-cols-1 gap-12 md:mt-10 md:grid-cols-12 md:gap-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -342,9 +342,9 @@ function Scene({
 
         <motion.div
           style={{ y: closeY }}
-          className={`relative md:col-span-6 ${p.video ? "" : "hidden md:block"} ${
+          className={`relative md:col-span-6 md:max-w-sm ${p.video ? "" : "hidden md:block"} ${
             flip ? "md:order-1 md:col-start-1" : "md:col-start-7"
-          } md:-mt-10 lg:-mt-16`}
+          } ${flip ? "" : "md:justify-self-end"} md:-mt-6 lg:-mt-10`}
         >
           <div className="overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9)]">
           {p.desktop && (
